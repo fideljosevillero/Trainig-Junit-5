@@ -20,6 +20,8 @@ import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 //@RunWith(MockitoJUnitRunner.class)
 @DisplayName("Test de la Clase PracticeRepositoryTest")
@@ -60,6 +62,14 @@ public class PracticeRepositoryTest {
             throw new IllegalArgumentException("a message");
         });
         assertEquals("a message", exception.getMessage());
+    }
+    
+    @ParameterizedTest
+    @ValueSource(strings = { "carro", "radar" })
+    void trainingTest(String parameterValue){
+    	System.out.println("EL VALOR DEL PARAMETRO =>" + parameterValue );
+    	int expected = 5;
+    	assertEquals(expected, parameterValue.length());
     }
     
     @Test
