@@ -152,7 +152,7 @@ public class PracticeRepositoryTest {
     
     @DisplayName("Csv Sources Parameter")
     @ParameterizedTest
-    @CsvSource({ "foo, 1", "bar, 2", "'baz, qux', 3" })
+    @CsvSource({ "foo, 1", "bar-editado, 2", "'baz, qux', 3" })
     void testCsvSource(String first, int second) {
         assertNotNull(first);
         System.out.println("testCsvSource value => " + first + " y " + second);
@@ -171,7 +171,6 @@ public class PracticeRepositoryTest {
 //*** PENDIENTES
 //    @ParameterizedTest
 //    @ArgumentsSource(MyArgumentsProvider.class)
-    //*** force merge
     
     // 3.14.5. Argument Aggregation
     
