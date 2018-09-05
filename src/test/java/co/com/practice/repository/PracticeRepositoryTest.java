@@ -48,6 +48,9 @@ public class PracticeRepositoryTest {
 
 //    @InjectMocks
 //    PracticeRepository practiceRepository;
+	public void metodoVacio() {
+		
+	}
 
     @Test
     @DisplayName("Nombre de metodo personalizado!!! :D")
