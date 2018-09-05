@@ -2,10 +2,16 @@ package co.com.practice.repository;
 
 import static java.time.Duration.ofMillis;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+
+import java.util.EnumSet;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +27,10 @@ import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 //@RunWith(MockitoJUnitRunner.class)
@@ -66,6 +76,7 @@ public class PracticeRepositoryTest {
     
     @ParameterizedTest
     @ValueSource(strings = { "carro", "radar" })
+    // @ValueSource(ints = { 2,5,7,11 })
     void trainingTest(String parameterValue){
     	System.out.println("EL VALOR DEL PARAMETRO =>" + parameterValue );
     	int expected = 5;
@@ -104,6 +115,55 @@ public class PracticeRepositoryTest {
     	assumeTrue("2".equals("wed"),
             () -> "Aborting test: not on developer workstation");
         // remainder of test
+    }
+    
+    @ParameterizedTest
+    @DisplayName("Parameterized method")
+    @EnumSource(value = TimeUnit.class, names = { "DAYS", "HOURS", "MICROSECONDS" })
+    void testWithEnumSourceInclude(TimeUnit timeUnit) {
+        assertTrue(EnumSet.of(TimeUnit.DAYS, TimeUnit.HOURS, TimeUnit.MICROSECONDS).contains(timeUnit));
+    }
+    
+    @DisplayName("Send method as Paramater")
+    @ParameterizedTest
+    @MethodSource("stringProvider")
+    void testMethodSource(String argument) {
+    	System.out.println("Parametro testMethodSource => " + argument);
+        assertNotNull(argument);
+    }
+    static Stream<String> stringProvider() {
+        return Stream.of("value 1", "value 2");
+    }
+//    @ParameterizedTest
+//    @MethodSource("stringIntAndListProvider")
+//    void testWithMultiArgMethodSource(String str, int num, List<String> list) {
+//        assertEquals(3, str.length());
+//        assertTrue(num >=1 && num <=2);
+//        assertEquals(2, list.size());
+//    }
+//    static Stream<Arguments> stringIntAndListProvider() {
+//        return Stream.of(
+//            arguments("foo", 1, Arrays.asList("a", "b")),
+//            arguments("bar", 2, Arrays.asList("x", "y"))
+//        );
+//    }
+    
+    @DisplayName("Csv Sources Parameter")
+    @ParameterizedTest
+    @CsvSource({ "foo, 1", "bar, 2", "'baz, qux', 3" })
+    void testCsvSource(String first, int second) {
+        assertNotNull(first);
+        System.out.println("testCsvSource value => " + first + " y " + second);
+        assertNotEquals(0, second);
+    }
+    @DisplayName("Csv Resource File Parameter")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/two-column.csv", numLinesToSkip = 1)
+    void testWithCsvFileSource(String first, int second) {
+        assertNotNull(first);
+        System.out.println("first value => " + first);
+        System.out.println("second value => " + second);
+        assertNotEquals(0, second);
     }
     
 }
