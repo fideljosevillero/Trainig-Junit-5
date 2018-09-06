@@ -3,24 +3,37 @@ package co.com.practice.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.atMost;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.util.Iterator;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.internal.progress.ArgumentMatcherStorage;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import co.com.practice.MyClass;
-
-import static org.mockito.Mockito.*;
 
 
 public class MockitoTestingClass {
 
+	@Mock MyClass clase;
+	@InjectMocks MyClass sclase;
+	
 	@DisplayName("Compare parameters Mockito")
 	@Test
 	public void test1()  {
