@@ -2,22 +2,22 @@ package co.com.practice.repository;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
 import java.util.Iterator;
 
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.internal.progress.ArgumentMatcherStorage;
 
 import co.com.practice.MyClass;
+
+import static org.mockito.Mockito.*;
+
 
 public class MockitoTestingClass {
 
@@ -94,6 +94,38 @@ public class MockitoTestingClass {
 		doReturn(0).when(testSpy).isIdMajorZero(-7);
 		
 		assertEquals(0, testSpy.isIdMajorZero(-7));
+	}
+	
+	@DisplayName("Verify behavior from methods")
+	@Test
+	public void testCallOtherMethods() {
+		MyClass test = mock(MyClass.class);
+		when(test.callOtherMethods(true)).thenReturn(true);
+		assertTrue(test.callOtherMethods(true));
+		
+		test.getId();
+		test.isIdMajorZero(7);
+		test.isIdMajorZero(7);
+		test.getAddreesFromName("");
+		test.setAddress("Avenida Siempreviva 742");
+		
+		// verificar que el parametro del metodo 'setAddress' sea 'Avenida Siempreviva 742'
+		verify(test).setAddress(ArgumentMatchers.eq("Avenida Siempreviva 742"));
+
+		// verificar que el metodo 'isIdMajorZero' es llamado dos veces
+		verify(test, times(2)).isIdMajorZero(7);
+		
+		// Mas alternativas para verificar el numero de llamadas por metodo.
+		verify(test, never()).setAddress("Solo da error si le envia los mismo parametros al metodo");
+		verify(test, atLeastOnce()).setAddress("Avenida Siempreviva 742");
+		verify(test, atLeast(2)).isIdMajorZero(7);
+		verify(test, atMost(2)).isIdMajorZero(7);
+		verify(test, times(1)).getId();
+		verify(test, times(1)).getAddreesFromName("");
+		verify(test, times(1)).callOtherMethods(true);
+		
+		// Verificacion final, comprueba que se hicieron todas las posibles verificaciones en el metodo (en este test).
+		verifyNoMoreInteractions(test);
 	}
 	
 }
