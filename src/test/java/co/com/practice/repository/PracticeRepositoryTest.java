@@ -46,12 +46,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 @TestInstance(Lifecycle.PER_CLASS) 
 public class PracticeRepositoryTest {
 
-//    @InjectMocks
-//    PracticeRepository practiceRepository;
-	public void metodoVacio() {
-		
-	}
-
     @Test
     @DisplayName("Nombre de metodo personalizado!!! :D")
     public void successTest() {
