@@ -86,7 +86,7 @@ public class MockitoTestingClass {
 		when(test.getAddreesFromName("")).thenThrow(new RuntimeException());
 	}
 	
-	@DisplayName("Mockito with spy and doReturn-whet")
+	@DisplayName("Mockito with spy and doReturn-when")
 	@Test
 	public void testDoReturn_when() {
 		MyClass test = new MyClass(1,"","");
