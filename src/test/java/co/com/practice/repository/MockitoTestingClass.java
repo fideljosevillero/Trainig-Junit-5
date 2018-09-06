@@ -2,8 +2,10 @@ package co.com.practice.repository;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +37,7 @@ public class MockitoTestingClass {
 	
 	@DisplayName("Mockito Iterator")
 	@Test
-	public void mockIteration() {
+	public void testMockIteration() {
 		Iterator<MyClass> it = mock(Iterator.class);
 		MyClass obj1 = new MyClass(1, "Object1", "x");
 		MyClass obj2 = new MyClass(2, "Object2", "y");
@@ -48,7 +50,7 @@ public class MockitoTestingClass {
 	
 	@DisplayName("Comparable String Mock value")
 	@Test
-	public void comparableMock() {
+	public void testComparableMock() {
 		Comparable<String> compareMock = mock(Comparable.class);
 		when(compareMock.compareTo(anyString())).thenReturn(0);	
 		
@@ -57,10 +59,20 @@ public class MockitoTestingClass {
 	
 	@DisplayName("Comparable int Mock value")
 	@Test
-	public void comparableMockInt() {
+	public void testrComparableMockInt() {
 		Comparable<Integer> compareMock = mock(Comparable.class);
 		when(compareMock.compareTo(anyInt())).thenReturn(1);	
 		
 		assertEquals(1, compareMock.compareTo(1234567));
+	}
+	
+	@DisplayName("Comparated Object Type")
+	@Test
+	public void testCompareObjectType() {
+		Comparable<MyClass> c = mock(Comparable.class);
+		when(c.compareTo(isA(MyClass.class))).thenReturn(0);
+		
+//		assertTrue(c.compareTo(new MyClass(1,"","")) == 0);
+		assertEquals(c.compareTo(new MyClass(1,"","")), 0);
 	}
 }
