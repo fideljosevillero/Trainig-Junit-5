@@ -2,17 +2,20 @@ package co.com.practice.repository;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import java.util.Iterator;
 
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.RepeatedTest;
 
 import co.com.practice.MyClass;
 
@@ -75,4 +78,22 @@ public class MockitoTestingClass {
 //		assertTrue(c.compareTo(new MyClass(1,"","")) == 0);
 		assertEquals(c.compareTo(new MyClass(1,"","")), 0);
 	}
+	
+	@DisplayName("Throw RunTimeException error")
+	@Test
+	public void testThrowExceptionMock() {
+		MyClass test = mock(MyClass.class);
+		when(test.getAddreesFromName("")).thenThrow(new RuntimeException());
+	}
+	
+	@DisplayName("Mockito with spy and doReturn-whet")
+	@Test
+	public void testDoReturn_when() {
+		MyClass test = new MyClass(1,"","");
+		MyClass testSpy = spy(test);
+		doReturn(0).when(testSpy).isIdMajorZero(-7);
+		
+		assertEquals(0, testSpy.isIdMajorZero(-7));
+	}
+	
 }

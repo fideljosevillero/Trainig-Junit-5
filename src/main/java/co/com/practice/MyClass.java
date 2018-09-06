@@ -11,6 +11,21 @@ public class MyClass {
 		this.name = name;
 		this.address = address;
 	}
+	
+	public String getAddreesFromName(String name) {
+		if(name.isEmpty() || name == null) {
+			throw new RuntimeException();
+		}
+		return "The address from user " + name + "Avenida Siempreviva 742";
+	}
+	
+	public int isIdMajorZero(int id) {
+		if(id <= 0) {
+			return 0;
+		}
+		return id;
+	}
+	
 	public int getId() {
 		return id;
 	}
