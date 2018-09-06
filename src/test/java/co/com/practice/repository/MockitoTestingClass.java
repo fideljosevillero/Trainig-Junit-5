@@ -1,7 +1,10 @@
 package co.com.practice.repository;
 
 
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -18,21 +21,31 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import co.com.practice.MyClass;
 
-
+@RunWith(MockitoJUnitRunner.class) // Ayuda con 
 public class MockitoTestingClass {
 
 	@Mock MyClass clase;
-	@InjectMocks MyClass sclase;
+//	@InjectMocks MyClass sclase;
 	
 	@DisplayName("Compare parameters Mockito")
 	@Test
@@ -139,6 +152,25 @@ public class MockitoTestingClass {
 		
 		// Verificacion final, comprueba que se hicieron todas las posibles verificaciones en el metodo (en este test).
 		verifyNoMoreInteractions(test);
+	}
+	
+	@Captor
+//	@InjectMocks
+	private ArgumentCaptor<List<String>> captor;
+//	@Rule
+//    public MockitoRule rule = MockitoJUnit.rule();
+//	
+	@Test
+	@DisplayName("Capturing Arguments with Mockito Framework")
+	public void testCaptureArguments() {
+//		ArgumentCaptor<List<String>> captor
+		List<String> listInit = Arrays.asList("Valor1", "valor2");
+		// creo un obj mock de tipo list
+		List<String> mockList = mock(List.class);
+		mockList.addAll(listInit);
+		verify(mockList).addAll(captor.capture());
+		List<String> captureArguments = captor.getValue();
+		assertThat(captureArguments, hasItems("valor2"));
 	}
 	
 }
