@@ -2,6 +2,8 @@ package co.com.practice.repository;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -42,5 +44,23 @@ public class MockitoTestingClass {
 		String value = it.next().getName() + "-" + it.next().getId();
 		
 		assertEquals("Object1-2", value);
+	}
+	
+	@DisplayName("Comparable String Mock value")
+	@Test
+	public void comparableMock() {
+		Comparable<String> compareMock = mock(Comparable.class);
+		when(compareMock.compareTo(anyString())).thenReturn(0);	
+		
+		assertEquals(0, compareMock.compareTo("texto cualquiera"));
+	}
+	
+	@DisplayName("Comparable int Mock value")
+	@Test
+	public void comparableMockInt() {
+		Comparable<Integer> compareMock = mock(Comparable.class);
+		when(compareMock.compareTo(anyInt())).thenReturn(1);	
+		
+		assertEquals(1, compareMock.compareTo(1234567));
 	}
 }
