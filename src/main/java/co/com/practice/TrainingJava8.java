@@ -1,5 +1,6 @@
 package co.com.practice;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +18,17 @@ public class TrainingJava8 {
 		return lista.stream()
 					.filter(n -> n % 2 == 0 )
 					.filter(n -> n != 2)
+					.limit(4)
 					.collect(Collectors.toList());
+	}
+	
+	public float getFreeSalary(float totalSalary) {
+		float result = totalSalary - get8Percent(totalSalary); 
+		return result;
+	}
+	
+	public float get8Percent(float total) {
+		return (total * 8) / 100;
 	}
 	
 }
