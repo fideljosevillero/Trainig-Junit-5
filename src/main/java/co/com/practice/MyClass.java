@@ -1,7 +1,13 @@
 package co.com.practice;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class MyClass {
 
+	private static final Logger LOGGER = java.util.logging.Logger.getLogger("MyClass");
+	
 	private int id;
 	private String name;
 	private String address;
@@ -11,9 +17,9 @@ public class MyClass {
 		this.name = name;
 		this.address = address;
 	}
-	public String getAddreesFromName(String name) {
-		if(name.isEmpty() || name == null) {
-			throw new RuntimeException();
+	public String getAddreesFromName(String name) throws IOException {
+		if(name.isEmpty()) {
+			throw new IOException();
 		}
 		return "The address from user " + name + "Avenida Siempreviva 742";
 	}
@@ -24,10 +30,12 @@ public class MyClass {
 		return id;
 	}
 	public boolean callOtherMethods(boolean value) {
-//		isIdMajorZero(7);
-//		isIdMajorZero(7);
-		
-		getAddreesFromName("");
+
+		try {
+			getAddreesFromName("");
+		} catch (IOException e) {
+			LOGGER.log(Level.INFO, e.toString());
+		}
 		setAddress("Avenida Siempreviva 742");
 		return value;
 	}

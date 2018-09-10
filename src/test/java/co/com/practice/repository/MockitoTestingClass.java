@@ -21,9 +21,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +47,8 @@ import co.com.practice.MyClass;
 @RunWith(MockitoJUnitRunner.class) // Ayuda con 
 public class MockitoTestingClass {
 
+	private final static Logger LOGGER = java.util.logging.Logger.getLogger("MockitoTestingClass");
+	
 	@Mock MyClass clase;
 //	@InjectMocks MyClass sclase;
 	
@@ -100,16 +105,20 @@ public class MockitoTestingClass {
 	public void testCompareObjectType() {
 		Comparable<MyClass> c = mock(Comparable.class);
 		when(c.compareTo(isA(MyClass.class))).thenReturn(0);
-		
+		int value = 0;
 //		assertTrue(c.compareTo(new MyClass(1,"","")) == 0);
-		assertEquals(c.compareTo(new MyClass(1,"","")), 0);
+		assertEquals(c.compareTo(new MyClass(1,"","")), value);
 	}
 	
 	@DisplayName("Throw RunTimeException error")
 	@Test
 	public void testThrowExceptionMock() {
 		MyClass test = mock(MyClass.class);
-		when(test.getAddreesFromName("")).thenThrow(new RuntimeException());
+		try {
+			when(test.getAddreesFromName("")).thenThrow(new RuntimeException());
+		} catch (IOException e) {
+			LOGGER.log(Level.INFO, e.toString());
+		}
 	}
 	
 	@DisplayName("Mockito with spy and doReturn-when")
@@ -132,7 +141,11 @@ public class MockitoTestingClass {
 		test.getId();
 		test.isIdMajorZero(7);
 		test.isIdMajorZero(7);
-		test.getAddreesFromName("");
+		try {
+			test.getAddreesFromName("");
+		} catch (IOException e1) {
+			LOGGER.log(Level.INFO, e1.toString());
+		}
 		test.setAddress("Avenida Siempreviva 742");
 		
 		// verificar que el parametro del metodo 'setAddress' sea 'Avenida Siempreviva 742'
@@ -147,7 +160,11 @@ public class MockitoTestingClass {
 		verify(test, atLeast(2)).isIdMajorZero(7);
 		verify(test, atMost(2)).isIdMajorZero(7);
 		verify(test, times(1)).getId();
-		verify(test, times(1)).getAddreesFromName("");
+		try {
+			verify(test, times(1)).getAddreesFromName("");
+		} catch (IOException e) {
+			LOGGER.log(Level.INFO, e.toString());
+		}
 		verify(test, times(1)).callOtherMethods(true);
 		
 		// Verificacion final, comprueba que se hicieron todas las posibles verificaciones en el metodo (en este test).
