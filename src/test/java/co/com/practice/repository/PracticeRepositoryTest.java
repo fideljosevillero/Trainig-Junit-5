@@ -45,7 +45,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 */
 @TestInstance(Lifecycle.PER_CLASS) 
 public class PracticeRepositoryTest {
-
+	
     @Test
     @DisplayName("Nombre de metodo personalizado!!! :D")
     public void successTest() {
@@ -54,13 +54,14 @@ public class PracticeRepositoryTest {
 
         // act
         String response = ""; // practiceRepository.success(personName);
-
+        int valueMethodToTest = 2; 
+        
         // assert
         Assert.assertNotNull(response);
         assertEquals(2,2, "Este metodo no se ve muy bien!!!");
         assertTrue(5 < 7, () -> "Assertion messages can be lazily evaluated -- "
                 + "to avoid constructing complex messages unnecessarily.");
-        Assert.assertEquals(2, 2);//"El consumo del servicio, ha sido exitoso, usted es Usuario de prueba", response);
+        Assert.assertEquals(2, valueMethodToTest);//"El consumo del servicio, ha sido exitoso, usted es Usuario de prueba", response);
     }
     
     @Test
@@ -103,7 +104,7 @@ public class PracticeRepositoryTest {
         // execution timed out after 10 ms
         assertTimeoutPreemptively(ofMillis(10), () -> {
             // Simulate task that takes more than 10 ms.
-            Thread.sleep(1);
+            //Thread.sleep(1);
         });
     }
     
