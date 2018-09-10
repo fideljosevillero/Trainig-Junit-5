@@ -2,26 +2,40 @@ package co.com.practice;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.ejb.EJB;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 public class TrainingJava8Test {
+	
+	//	@Before vs @BeforeClass vs @BeforeEach vs @BeforeAll
+	//	https://www.baeldung.com/junit-before-beforeclass-beforeeach-beforeall
 	
 	private static List<Integer> lista;
 	
 	private static TrainingJava8 objTest;
 	
-	@BeforeAll
+	@Before
+	public void tests1(){
+		System.out.println("Before");
+	}
+	
+	@After
+	public void tests2(){
+		System.out.println("After");
+	}
+	
+	@BeforeClass
 	public static void initValues() {
 		System.out.println("entra al beforeAll");
 		lista = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,22));
@@ -42,6 +56,14 @@ public class TrainingJava8Test {
 		List<Integer> lista = objTest.getEvenNumbers(this.lista);
 		int actual = lista.size();
 		assertEquals(4, actual);
+	}
+	
+	@Test
+	@DisplayName("Behavior get8Percent")
+	public void testBehavior_Get8Percent(){
+		TrainingJava8 objMock = mock(TrainingJava8.class);
+		objMock.get8Percent(100);
+		verify(objMock, times(1)).get8Percent(100);
 	}
 	
 	
