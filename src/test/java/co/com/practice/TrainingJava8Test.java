@@ -13,8 +13,10 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+
+
+import org.junit.Test;
 
 public class TrainingJava8Test {
 	
@@ -37,7 +39,7 @@ public class TrainingJava8Test {
 	
 	@BeforeClass
 	public static void initValues() {
-		System.out.println("entra al beforeAll");
+		System.out.println("entra al beforeClass");
 		lista = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,22));
 		objTest = new TrainingJava8();
 	}
